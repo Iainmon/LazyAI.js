@@ -120,24 +120,24 @@ var ai = new Classifier(0.70);
 
 
 
-const TrainingDat = [
-    {
-        input: "By 2035, Africa will have the largest workforce in the world. Investing in young people’s health and education is the best way to make the most of this opportunity.",
-        output: {bill: 1}
-    },
-    {
-        input: "Selase Kove-Seyram traveled the route that tomatoes take from farm to table. Along the way, he learned how food — and untapped human potential — could hold the key to his country’s success",
-        output: {bill: 1}
-    },
-    {
-        input: "hello",
-        output: {bill: 1}
-    },
-    {
-        input: "wampy",
-        output: {melina: 1}
-    },
-]
+// const TrainingDat = [
+//     {
+//         input: "By 2035, Africa will have the largest workforce in the world. Investing in young people’s health and education is the best way to make the most of this opportunity.",
+//         output: {bill: 1}
+//     },
+//     {
+//         input: "Selase Kove-Seyram traveled the route that tomatoes take from farm to table. Along the way, he learned how food — and untapped human potential — could hold the key to his country’s success",
+//         output: {bill: 1}
+//     },
+//     {
+//         input: "hello",
+//         output: {bill: 1}
+//     },
+//     {
+//         input: "wampy",
+//         output: {melina: 1}
+//     },
+// ]
 const BillGatesTraingData = [
     "Selase Kove-Seyram traveled the route that tomatoes take from farm to table. Along the way, he learned how food — and untapped human potential — could hold the key to his country’s success",
     "By 2035, Africa will have the largest workforce in the world. Investing in young people’s health and education is the best way to make the most of this opportunity.",
@@ -153,4 +153,14 @@ const TimCookTrainingData = [
     "Stunning photos #shotoniphone this weekend by new iPhone XS and iPhone XS Max users!",
     "Thrilled to get these new Apple products into the hands (and onto the wrists) of so many customers around the world. Can’t wait to hear what you think!",
     "Thanks Apple Soho and to our team around the world for the hard work you’re doing this week and all year round! Can’t wait for Friday."
-]
+];
+
+
+var tweetAI = new Classifier(0.70);
+
+for (var i = 0; i < BillGatesTraingData.length; i++) {
+    tweetAI.addTrainingData(BillGatesTraingData[i], "billgates");
+}
+for (var i = 0; i < TimCookTrainingData.length; i++) {
+    tweetAI.addTrainingData(TimCookTrainingData[i], "timcook");
+}

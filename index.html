@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Nexal</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <style>
+
+    body {
+        font-family: Lato, sans-serif;
+        background: linear-gradient(230deg, #a24bcf, #4b79cf, #4bc5cf);
+        background-size: 1000% 1000%;
+        color: #fff;
+        padding: 50px 75px;
+        -webkit-animation: AnimationName 10s ease infinite;
+        -moz-animation: AnimationName 10s ease infinite;
+        animation: AnimationName 10s ease infinite;
+        line-height: 35px;
+        font-size: 15px;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName { 
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+    </style>
+    <h1>Nexal Neural Network</h1>
+    <script src="./js/brain.js"></script>
+    <script src="./js/scripts.js"></script>
+    <h3>Instructions</h3>
+    <h5>This project uses brain.js</h5>
+    <h5>Only works with Chrome and Opera.</h5>
+    <ol>
+        <li>Open the js console in the developer tools menu.</li>
+        <li>An AI has already been instantiated: <code>var ai = new Classifier(0.70); // 70% threshold</code></li>
+        <ul><li>
+            You may change the threshold with <code>ai.threshold = (float not exceeding 1)</code>
+        </li></ul>
+        <li>Add Classifier data to the ai with: <code>ai.addTrainingData("data", "Item");</code></li>
+        <ul>
+            <li>You may also add an array trainging data as objects instead of adding them line by line. <br>
+                <code>{
+                    
+                    input: "Trainging data",
+                    
+                    output: {   [Item]: 1   }
+                    
+                }
+            </code></li>
+        </ul>
+        <li>Once you have added a suficient amount of data to the AI you now must train it. To do so, you must run the command: <code>ai.learn();</code> </li>
+        <li>Now all you need to do is <code>ai.ask("data");</code>, and the AI you created will classify the data, and match it to one of the items that you have given it!</li>
+    </ol>
+</body>

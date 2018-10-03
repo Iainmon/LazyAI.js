@@ -20,7 +20,7 @@ class Classifier {
     
     train(data) {
         let net = new brain.NeuralNetwork();
-        net.train(processTrainingData(data));
+        net.train(this.processTrainingData(data));
         this.trainedNet = net.toFunction();
     };
 
@@ -31,19 +31,67 @@ class Classifier {
     };
     
     execute(input) {
-        let results = this.trainedNet(encode(input));
+
+        let results = this.trainedNet(this.encode(input));
+        this.threshold = 60;
+
         console.log(results);
         let output;
-        let certainty;
-        if (results.trump > results.kardashian) {
-            output = 'Donald Trump'
-            certainty = Math.floor(results.trump * 100)
-        } else { 
-            output = 'Kim Kardashian'
-            certainty = Math.floor(results.kardashian * 100)
+        let brokeThreshold;
+
+        let result = Object.values(results);
+        let greatestCertainty = Math.max(...result);
+        let greatestCertaintyKey;
+        //debugLog(results);
+        
+        Object.entries(results).forEach(([key, value]) => {
+            if (value == greatestCertainty) {
+                greatestCertaintyKey = key;
+            }
+        });
+
+        if (greatestCertainty >= this.threshold || !!!greatestCertainty) {
+            console.log('Certainty did not break threshold!');
+            return {
+                item: null,
+                certainty: greatestCertainty,
+                brokeThreshold: false,
+                rawOutput: results
+            };
         }
-    
-        return "I'm " + certainty + "% sure that tweet was written by " + output;
+        console.log(`I am ${ Math.round(greatestCertainty * 100000) / 1000 }% sure that ${ greatestCertaintyKey } is the item coresponding with: ${ input }`);
+        return {
+            item: key,
+            certainty: greatestCertainty,
+            brokeThreshold: true,
+            rawOutput: results
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // let results = this.trainedNet(this.encode(input));
+        // console.log(results);
+        // let output;
+        // let certainty;
+        // if (results.trump > results.kardashian) {
+        //     output = 'Donald Trump'
+        //     certainty = Math.floor(results.trump * 100)
+        // } else {
+        //     output = 'Kim Kardashian'
+        //     certainty = Math.floor(results.kardashian * 100)
+        // }
+        // return results;
+        // //return "I'm " + certainty + "% sure that tweet was written by " + output;
     }
 }
 

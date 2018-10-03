@@ -40,7 +40,7 @@ class Classifier {
 
         let result = Object.values(results);
         let answer = Math.max(...result);
-        debugLog(results);
+        //debugLog(results);
         
         var item = new Array;
         Object.entries(results).forEach(([key, value]) => {
@@ -48,7 +48,9 @@ class Classifier {
                 item.push(key);
                 item.push(value);
             }
-            });
+        });
+
+        console.log;
 
         if (answer >= this.threshold) {
             debugLog("Certainty did not break threshold!");

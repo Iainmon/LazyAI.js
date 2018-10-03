@@ -1,145 +1,104 @@
-class Classifier {
-    constructor(threshold, inputTrainingData) {
-        this.trainedNet;
-        this.threshold = threshold;
-        if (inputTrainingData) {
-            this.trainingData = inputTrainingData;
-        } else {
-            this.trainingData = new Array();
-        }
-        // this.things = new Array();
-    }
+// class Classifier {
+//     constructor(threshold, inputTrainingData) {
+//         this.trainedNet;
+//         this.threshold = threshold;
+//         if (inputTrainingData) {
+//             this.trainingData = inputTrainingData;
+//         } else {
+//             this.trainingData = new Array();
+//         }
+//         // this.things = new Array();
+//     }
 
-    encode(arg) {
-        return arg.split('').map(x => (x.charCodeAt(0) / 256));
-    }
+//     encode(arg) {
+//         return arg.split('').map(x => (x.charCodeAt(0) / 256));
+//     }
 
-    processTrainingData(data) {
-        return data.map(d => {
-            return {
-                input: this.encode(d.input),
-                output: d.output
-            }
-        })
-    }
+//     processTrainingData(data) {
+//         return data.map(d => {
+//             return {
+//                 input: this.encode(d.input),
+//                 output: d.output
+//             }
+//         })
+//     }
 
-    train(data) {
-        let net = new brain.NeuralNetwork();
-        net.train(this.processTrainingData(data));
-        this.trainedNet = net.toFunction();
-    };
+//     train(data) {
+//         let net = new brain.NeuralNetwork();
+//         net.train(this.processTrainingData(data));
+//         this.trainedNet = net.toFunction();
+//     };
 
-    ask(input) {
-        let results = this.trainedNet(this.encode(input));
-        this.threshold = 60;
+//     ask(input) {
+//         let results = this.trainedNet(this.encode(input));
+//         this.threshold = 60;
 
-        debugLog(results);
-        let output;
-        let certainty;
-        let brokeThreshold;
+//         debugLog(results);
+//         let output;
+//         let certainty;
+//         let brokeThreshold;
 
-        let result = Object.values(results);
-        let answer = Math.max(...result);
-        //debugLog(results);
+//         let result = Object.values(results);
+//         let answer = Math.max(...result);
+//         //debugLog(results);
         
-        var item = new Array;
-        Object.entries(results).forEach(([key, value]) => {
-            if (value == answer) {
-                item.push(key);
-                item.push(value);
-            }
-        });
+//         var item = new Array;
+//         Object.entries(results).forEach(([key, value]) => {
+//             if (value == answer) {
+//                 item.push(key);
+//                 item.push(value);
+//             }
+//         });
 
-        console.log;
+//         console.log;
 
-        if (answer >= this.threshold) {
-            debugLog("Certainty did not break threshold!");
-            return {
-                item: null,
-                certainty: item[1],
-                brokeThreshold: false,
-                rawOutput: results
-            };
-        }
-        debugLog("I am " + (answer*100) + "% sure that " + item[0] + " is the item coresponding with: " + input);
-        return {
-            item: item[0],
-            certainty: item[1],
-            brokeThreshold: true,
-            rawOutput: results
-        };
+//         if (answer >= this.threshold) {
+//             debugLog("Certainty did not break threshold!");
+//             return {
+//                 item: null,
+//                 certainty: item[1],
+//                 brokeThreshold: false,
+//                 rawOutput: results
+//             };
+//         }
+//         debugLog("I am " + (answer*100) + "% sure that " + item[0] + " is the item coresponding with: " + input);
+//         return {
+//             item: item[0],
+//             certainty: item[1],
+//             brokeThreshold: true,
+//             rawOutput: results
+//         };
         
         
-    }
+//     }
 
-    learn() {
-        debugLog("Training...");
-        this.train(this.trainingData);
-        debugLog("Done training.");
-    }
+//     learn() {
+//         debugLog("Training...");
+//         this.train(this.trainingData);
+//         debugLog("Done training.");
+//     }
 
-    addTrainingData(input, item) {//  (DataType, String)
-     var data = {
-            input: input,
-            output: { [item] : 1 }
-      }
-      this.trainingData.push(data);
-    }
-}
-var debugMode = true;
+//     addTrainingData(input, item) {//  (DataType, String)
+//      var data = {
+//             input: input,
+//             output: { [item] : 1 }
+//       }
+//       this.trainingData.push(data);
+//     }
+// }
+// var debugMode = true;
 
-function debugLog(output) {
-  if (debugMode) {
-    console.log(output);
-    return true;
-  } else {
-    return false;
-  }
-}
+// function debugLog(output) {
+//   if (debugMode) {
+//     console.log(output);
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
 //------------------------------------------------------------
 
-// const TrainingDat = [
-//     {
-//         input: "hello",
-//         output: {bill: 1}
-//     },
-//     {
-//         input: "wampy",
-//         output: {melina: 1}
-//     },
-//     {
-//         input: "hello",
-//         output: {bill: 1}
-//     },
-//     {
-//         input: "wampy",
-//         output: {melina: 1}
-//     },
-// ]
-//var ai = new Classifier(0.70, TrainingDat);
-var ai = new Classifier(0.70);
-// ai.learn();
 
-
-
-// const TrainingDat = [
-//     {
-//         input: "By 2035, Africa will have the largest workforce in the world. Investing in young people’s health and education is the best way to make the most of this opportunity.",
-//         output: {bill: 1}
-//     },
-//     {
-//         input: "Selase Kove-Seyram traveled the route that tomatoes take from farm to table. Along the way, he learned how food — and untapped human potential — could hold the key to his country’s success",
-//         output: {bill: 1}
-//     },
-//     {
-//         input: "hello",
-//         output: {bill: 1}
-//     },
-//     {
-//         input: "wampy",
-//         output: {melina: 1}
-//     },
-// ]
 const BillGatesTraingData = [
     "Selase Kove-Seyram traveled the route that tomatoes take from farm to table. Along the way, he learned how food — and untapped human potential — could hold the key to his country’s success",
     "By 2035, Africa will have the largest workforce in the world. Investing in young people’s health and education is the best way to make the most of this opportunity.",
@@ -160,9 +119,19 @@ const TimCookTrainingData = [
 
 var tweetAI = new Classifier(0.70);
 
-for (var i = 0; i < BillGatesTraingData.length; i++) {
-    tweetAI.addTrainingData(BillGatesTraingData[i], "billgates");
-}
-for (var i = 0; i < TimCookTrainingData.length; i++) {
-    tweetAI.addTrainingData(TimCookTrainingData[i], "timcook");
+// for (var k = 0; k < 20; k++) {
+//     for (var i = 0; i < BillGatesTraingData.length; i++) {
+//         tweetAI.addTrainingData(BillGatesTraingData[i], "billgates");
+//     }
+//     for (var i = 0; i < TimCookTrainingData.length; i++) {
+//         tweetAI.addTrainingData(TimCookTrainingData[i], "timcook");
+//     }
+// }
+
+
+
+
+for (var k = 0; k < 1; k++) {
+    tweetAI.addTrainingData("Hello, my name is Iain Moncrief.", "iain");
+    tweetAI.addTrainingData("hello;my name is not ian moncrief!!", "notIain");
 }

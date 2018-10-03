@@ -24,7 +24,6 @@ class Classifier {
         this.trainedNet = net.toFunction();
     };
 
-
     addTrainingData(input, item) {//  (DataType, String)
         var data = {
                input: input,
@@ -32,13 +31,14 @@ class Classifier {
          }
         this.trainingData.push(data);
     }
+    
     learn() {
         console.log('Training...');
         this.train(this.trainingData);
         console.log('Done training.');
     };
     
-    execute(input) {
+    ask(input) {
 
         let results = this.trainedNet(this.encode(input));
         this.threshold = 0.60;
@@ -72,7 +72,6 @@ class Classifier {
             item: greatestCertaintyKey,
             certainty: greatestCertainty,
             brokeThreshold: true,
-            processedOutput: 
             rawOutput: results
         };
     }

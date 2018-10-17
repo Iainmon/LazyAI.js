@@ -119,19 +119,7 @@ const TimCookTrainingData = [
 
 var tweetAI = new Classifier(0.70);
 
-// for (var k = 0; k < 20; k++) {
-//     for (var i = 0; i < BillGatesTraingData.length; i++) {
-//         tweetAI.addTrainingData(BillGatesTraingData[i], "billgates");
-//     }
-//     for (var i = 0; i < TimCookTrainingData.length; i++) {
-//         tweetAI.addTrainingData(TimCookTrainingData[i], "timcook");
-//     }
-// }
-
-
-
-
-for (var k = 0; k < 1; k++) {
+for (var k = 0; k < 10000; k++) {
     tweetAI.addTrainingData("Hello, my name is Iain Moncrief.", "iain");
     tweetAI.addTrainingData("hello;my name is not ian moncrief!!", "notIain");
 }

@@ -107,6 +107,7 @@ const BillGatesTraingData = [
     "Young people like #Goalkeepers18 winners @NadiaMuradBasee, @AmikaGeorge, and Dysmus Kisilu aren’t just the leaders of tomorrow, they’re the leaders of today. I’m optimistic that global progress will continue—as long as we invest in young people.",
     "What’s in the #Goalkeepers18 report? More eye-popping charts like this one"
 ];
+
 const TimCookTrainingData = [
     "Women’s voices are changing the world. We are inspired by the remarkable women our team met this week at Grace Hopper and we are proud to support GHC and its mission.",
     "iOS + @Salesforce = powerful tools and customer experiences right on iPhone and iPad. Changing the way business is done!",
@@ -116,10 +117,24 @@ const TimCookTrainingData = [
     "Thanks Apple Soho and to our team around the world for the hard work you’re doing this week and all year round! Can’t wait for Friday."
 ];
 
+// var nameAI = new Classifier(0.70);
+//
+// for (var k = 0; k < 10000; k++) {
+//     nameAI.addTrainingData("Hello, my name is Iain Moncrief.", "iain");
+//     nameAI.addTrainingData("hello;my name is not iain moncrief!!", "notIain");
+// }
 
-var tweetAI = new Classifier(0.70);
-
-for (var k = 0; k < 10000; k++) {
-    tweetAI.addTrainingData("Hello, my name is Iain Moncrief.", "iain");
-    tweetAI.addTrainingData("hello;my name is not ian moncrief!!", "notIain");
-}
+module.exports = {
+    addData : (untrainedAI) => {
+        let k;
+        for (k = 0; k < 1; k++) {
+            TimCookTrainingData.forEach( (data) => {
+                untrainedAI.addTrainingData(data, "tim");
+            });
+            BillGatesTraingData.forEach( (data) => {
+                untrainedAI.addTrainingData(data, "bill");
+            });
+        }
+        return untrainedAI;
+    },
+};

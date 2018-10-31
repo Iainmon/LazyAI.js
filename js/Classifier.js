@@ -1,3 +1,5 @@
+let brain = require('brain.js');
+
 class Classifier {
     constructor(threshold, preLoadedTrainingData) {
         this.trainedNet;
@@ -5,14 +7,14 @@ class Classifier {
         this.trainingData = (!!preLoadedTrainingData) ? preLoadedTrainingData : [] ;
         this.threshold = (!!threshold) ? threshold : 0.70 ;
     }
-    encode(arg) {
+    static encode(arg) {
         return arg.split('').map(x => (x.charCodeAt(0) / 256));
     }
     
     processTrainingData(data) {
         return data.map(d => {
             return {
-                input: this.encode(d.input),
+                input: Classifier.encode(d.input),
                 output: d.output
             }
         });
@@ -22,26 +24,33 @@ class Classifier {
         var data = {
                input: input,
                output: { [item] : 1 }
-         }
+         };
         this.trainingData.push(data);
     }
 
-    train() {
-        console.log('Training...');
+    train(debug = false) {
 
+        if (debug) console.log('Processing training data...');
+        let processedTrainignData = this.processTrainingData(this.trainingData);
+
+        if (debug) console.log('Instantiating neural net...');
         let net = new brain.NeuralNetwork();
-        net.train(this.processTrainingData(this.trainingData));
+
+        if (debug) console.log('Training...');
+        net.train(processedTrainignData);
+
+        if (debug) console.log('Creating function...');
         this.trainedNet = net.toFunction();
 
-        console.log('Done training.');
+        if (debug) console.log('Done training.');
     };
     
-    ask(input) {
+    ask(input, debug = false) {
 
-        let results = this.trainedNet(this.encode(input));
+        let results = this.trainedNet(Classifier.encode(input));
         this.threshold = 0.60;
 
-        console.log(results);
+        if (debug) console.log(results);
         let output;
         let brokeThreshold;
 
@@ -57,7 +66,7 @@ class Classifier {
         });
 
         if (greatestCertainty < this.threshold || !!!greatestCertainty) {
-            console.log('Certainty did not break threshold!');
+            if (debug) console.log('Certainty did not break threshold!');
             return {
                 item: greatestCertaintyKey,
                 certainty: greatestCertainty,
@@ -65,7 +74,7 @@ class Classifier {
                 rawOutput: results
             };
         }
-        console.log(`I am ${ Math.round(greatestCertainty * 100000) / 1000 }% sure that "${ greatestCertaintyKey }" is the item coresponding with "${ input }"`);
+        if (debug) console.log(`I am ${ Math.round(greatestCertainty * 100000) / 1000 }% sure that "${ greatestCertaintyKey }" is the item coresponding with "${ input }"`);
         return {
             item: greatestCertaintyKey,
             certainty: greatestCertainty,
@@ -74,3 +83,8 @@ class Classifier {
         };
     }
 }
+
+
+module.exports = {
+    Classifier: Classifier
+};

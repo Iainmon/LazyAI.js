@@ -1,0 +1,27 @@
+{
+  "name": "lazyai",
+  "version": "1.0.0",
+  "description": "An easy classifier library.",
+  "main": "build.js",
+  "dependencies": {
+    "brain.js": "^1.4.2",
+    "npm-gui": "^0.3.1",
+    "vorpal": "^1.12.0",
+    "vorpal-repl": "^1.1.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node ./build.js",
+    "build": "node ./build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iainmon/LazyAI.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Iainmon/LazyAI.js/issues"
+  },
+  "homepage": "https://github.com/Iainmon/LazyAI.js#readme"
+}
